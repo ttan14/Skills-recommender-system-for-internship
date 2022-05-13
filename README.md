@@ -23,4 +23,4 @@
 
 - **CSIT internship presentation (13 May).pptx**: Final presentation to company
 
-- 
+- **project_mgmt_timeline.xlsx**: Breakdown of overall timeline of project deliverables
