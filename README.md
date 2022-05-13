@@ -1,5 +1,8 @@
 **Building skills/courses recommender system for internship**
 
+**_TLDR_**: To run the full system, use **final_demo_frontend.py** using streamlit. The script reads data from all files in **Datasources**. Alternatively the system can be run using **Model Part 2_pull proficiency description based on skill gaps.ipynb** in Jupyter Notebook.
+
+
 **Files**:
 
 - **Original data.zip**: contains the raw data from the SkillsFuture competency frameworks (135 Excel for competency descriptions, 104 PDF Job description/competency frameworks)
