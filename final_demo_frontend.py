@@ -4,21 +4,23 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import re
+import os
 import nltk #for NLP
 from nltk import word_tokenize, pos_tag
 from nltk.corpus import stopwords
-nltk.download('punkt')
-nltk.download('stopwords')
-nltk.download('universal_tagset')
-nltk.download('reuters')
-nltk.download('averaged_perceptron_tagger')
+nltk.download('wordnet', download_dir="C:\\nltk_data")
+nltk.download('omw-1.4', download_dir="C:\\nltk_data")
+nltk.download('punkt', download_dir="C:\\nltk_data")
+nltk.download('stopwords', download_dir="C:\\nltk_data")
+nltk.download('universal_tagset', download_dir="C:\\nltk_data")
+nltk.download('reuters', download_dir="C:\\nltk_data")
+nltk.download('averaged_perceptron_tagger', download_dir="C:\\nltk_data")
 ###vectorizer
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 ### similarity measure
 from sklearn.metrics.pairwise import cosine_similarity
 import altair as alt
-
 
 header = st.container()
 part_1 = st.container()
@@ -29,17 +31,17 @@ part_2 = st.container()
     
 
 ##### reading data sources #####   
-coursedata = '/Users/somethingcreative-7/Documents/Tessas Internship/Phase 2 preso/Supplementary documents/coursefeaturesoutput.xlsx'
+coursedata = os.getcwd() + '/Datasources/coursefeaturesoutput.xlsx'
 coursedata = pd.read_excel(coursedata)
 
-courseradb = pd.read_csv('/Users/somethingcreative-7/Documents/Tessas Internship/Phase 2 preso/Supplementary documents/Coursera.csv') #only used to pull out course details for user at the end
+courseradb = pd.read_csv(os.getcwd() + '/Datasources/Coursera.csv') #only used to pull out course details for user at the end
 
-userdata = '/Users/somethingcreative-7/Documents/Tessas Internship/Phase 2 preso/Supplementary documents/JDoutput.xlsx'
+userdata = os.getcwd() + '/Datasources/JDoutput.xlsx'
 userdata = pd.read_excel(userdata)
 userdata['Job Role'] = userdata['Job Role'].apply(lambda x: x.lstrip(' '))
 ## Pull out proficiency description (input for Reco model)
 ###load proficiency descriptions data from database
-skill_prof_data = '/Users/somethingcreative-7/Documents/Tessas Internship/Phase 2 preso/Supplementary documents/proficiency_description.xlsx'
+skill_prof_data = os.getcwd() + '/Datasources/proficiency_description.xlsx'
 skill_prof_df = pd.read_excel(skill_prof_data)
 skill_prof_df=skill_prof_df.drop(columns=['Description'],axis=1)
 
@@ -116,6 +118,7 @@ with part_1:
         st.write('<style>div.st-bf{flex-direction:column;} div.st-ag{font-weight:bold;padding-left:2px;}</style>', unsafe_allow_html=True)
         new=st.radio(text,('0','1','2','3','4','5','6')) 
         ##new = int(input(text))
+
         skills_df.at[index, 'user_level']= new
 
     ##skills_df['user_level']=skills_df['expected_level'].apply(lambda i: int(i)-1) ###used for level-by-level testing
