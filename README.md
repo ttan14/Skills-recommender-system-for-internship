@@ -21,3 +21,6 @@
 
 - **final_demo_frontend.py**: Contains the full reco system (front end and back end), to be _run on streamlit_. 
 
+- **CSIT internship presentation (13 May).pptx**: Final presentation to company
+
+- 
