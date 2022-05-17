@@ -92,8 +92,8 @@ with part_1:
     
     ###dropdown for USER to select target job
 
-    default_ix = job_list.index("Software Engineer") #set default value
-    target_job= st.selectbox('', options=job_list, index=default_ix) #set default value to software engineer
+    default_ix = job_list.index("Associate Business Analyst") #set default value
+    target_job= st.selectbox('', options=job_list, index=default_ix) #initialise select box
     target_job_row = userdata.loc[userdata['Job Role']==target_job]
     target_job_df = pd.DataFrame(target_job_row)
     st.table(target_job_df[['Job Role', 'Track', 'Sub-track', 'Occupation']])
