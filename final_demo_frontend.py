@@ -8,13 +8,30 @@ import os
 import nltk #for NLP
 from nltk import word_tokenize, pos_tag
 from nltk.corpus import stopwords
-nltk.download('wordnet', download_dir="C:\\nltk_data")
-nltk.download('omw-1.4', download_dir="C:\\nltk_data")
-nltk.download('punkt', download_dir="C:\\nltk_data")
-nltk.download('stopwords', download_dir="C:\\nltk_data")
-nltk.download('universal_tagset', download_dir="C:\\nltk_data")
-nltk.download('reuters', download_dir="C:\\nltk_data")
-nltk.download('averaged_perceptron_tagger', download_dir="C:\\nltk_data")
+
+try:
+    nltk.data.find('tokenizers/punkt')
+except LookupError:
+    nltk.download('punkt', download_dir="C:\\nltk_data")
+
+try:
+    nltk.data.find('taggers/universal_tagset')
+    nltk.data.find('taggers/averaged_perceptron_tagger')
+except LookupError:
+    nltk.download('universal_tagset', download_dir="C:\\nltk_data")
+    nltk.download('averaged_perceptron_tagger', download_dir="C:\\nltk_data")
+
+try:
+    nltk.data.find('corpora/wordnet')
+    nltk.data.find('corpora/omw-1.4')
+    nltk.data.find('corpora/stopwords')
+    # nltk.data.find('corpora/reuters')
+except LookupError:
+    nltk.download('wordnet', download_dir="C:\\nltk_data")
+    nltk.download('omw-1.4', download_dir="C:\\nltk_data")
+    nltk.download('stopwords', download_dir="C:\\nltk_data")
+    # nltk.download('reuters', download_dir="C:\\nltk_data")
+
 ###vectorizer
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
@@ -74,7 +91,9 @@ with part_1:
     job_list= list(sorted(userdata['Job Role']))
     
     ###dropdown for USER to select target job
-    target_job= st.selectbox('', options=job_list)
+
+    default_ix = job_list.index("Software Engineer") #set default value
+    target_job= st.selectbox('', options=job_list, index=default_ix) #set default value to software engineer
     target_job_row = userdata.loc[userdata['Job Role']==target_job]
     target_job_df = pd.DataFrame(target_job_row)
     st.table(target_job_df[['Job Role', 'Track', 'Sub-track', 'Occupation']])
@@ -110,7 +129,7 @@ with part_1:
     st.markdown(user_instruction_prof,unsafe_allow_html=True)
     ##iterate down skills list to get user input for each skill
     for i in skills_df['Skills']:
-        index= skills_df.index[skills_df['Skills'] == i]
+        index= skills_df.index[skills_df['Skills'] == i][0]
         #get user input
         text= "Enter your proficiency for " + str(i)
         
